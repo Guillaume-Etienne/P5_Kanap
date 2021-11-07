@@ -1,3 +1,10 @@
+/* Everything about articles + fonctions to create and manipulate :
+Constructor : to make new objects
+generateCard : to fill the HTML code of Index.HTML
+generateProduct : to fill the HTML code of Product.HTML
+*/
+
+
 class Article {
     constructor(articleData){
         this.id=articleData["_id"]
@@ -13,7 +20,7 @@ class Article {
         container.setAttribute("href","./product.html?id=" + this.id);
         const article=document.createElement("article");
         container.appendChild(article);
-        const img=document.createElement("img")
+        const img=document.createElement("img");
         article.appendChild(img);
         img.setAttribute("src", this.imageUrl);
         img.setAttribute("alt", this.altTxt);
@@ -25,10 +32,17 @@ class Article {
         article.appendChild(descript);
         descript.setAttribute("class", "productDescription");
         descript.innerHTML=this.description;
-        // image, id, srv etc... faire tous les champs 
-        
+        // image, id, srv etc... faire tous les champs         
         return container;
     }
+    generateProductImage() {
+        document.getElementsByClassName("item__img")
+        const imgproduct=document.createElement("img")
+        document.appendChild(imgproduct)
+        imgproduct.setAttribute("src", this.imageUrl)
+        console.log(this.imageUrl)
 
 
+        return container
+    }
 }
