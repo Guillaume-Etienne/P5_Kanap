@@ -9,7 +9,7 @@
 var currentUrl = window.location.href;
 var url = new URL(currentUrl);
 var idCanap = url.searchParams.get("id");
-console.log("récupéré dans l'URL : " + idCanap);
+//console.log("récupéré dans l'URL : " + idCanap);
 
 
 //To get one Sofa and print its details on the screen
@@ -17,9 +17,8 @@ console.log("récupéré dans l'URL : " + idCanap);
 fetch(`http://localhost:3000/api/products/${idCanap}`)
 .then (dataFromApi => dataFromApi.json())
 .then (jsonArticle => {
-    console.log(jsonArticle)    
-    let article = new Article(jsonArticle)
-    console.log("article Guigui" + article.description)
+    //console.log(jsonArticle)    
+    let article = new Article(jsonArticle)    
     const img=document.createElement("img")
     document.getElementById("toto").appendChild(img)
     img.setAttribute("src", article.imageUrl)
@@ -40,8 +39,17 @@ fetch(`http://localhost:3000/api/products/${idCanap}`)
 })
 
 //Listen color and qqty selected and validate
+
 var button = document.getElementById("addToCart")
 button.addEventListener("click", function () {
-    alert("t'as cliqué mec je t'ai vu !")
+    //Coulour Selected
+    const colorList = document.getElementById("colors");
+    const colorSelected = colorList.querySelector("option:checked").value
+    //Qtty Selected
+    const qttySelected = document.getElementById("quantity").value
+    //Message Test
+    alert("Nombre : " + qttySelected + " et couleur : " + colorSelected)
+
+    
     //passer les data par l'URL ?  /par Storage ?
 })
