@@ -1,55 +1,71 @@
-// 3 parts :
-// Search for ID parameter in the URL
-// Print the details
-// listen colors and qqty to send to cart
+// 4 parts :
+// 1 Search for ID parameter in the URL
+// 2 Print the details
+// 3 listen colors and qqty to send to cart
+// 4 Cart management of the product page - connected to localStorage
 
 
-//Search for ID parameter in the URL :
+// 1 Search for ID parameter in the URL :
 
 var currentUrl = window.location.href;
 var url = new URL(currentUrl);
 var idCanap = url.searchParams.get("id");
-//console.log("récupéré dans l'URL : " + idCanap);
 
 
-//To get one Sofa and print its details on the screen
+// 2 To get one Sofa and print its details on the screen
 
 fetch(`http://localhost:3000/api/products/${idCanap}`)
-.then (dataFromApi => dataFromApi.json())
-.then (jsonArticle => {
-    //console.log(jsonArticle)    
-    let article = new Article(jsonArticle)    
-    const img=document.createElement("img")
-    document.getElementById("toto").appendChild(img)
-    img.setAttribute("src", article.imageUrl)
-    img.setAttribute("alt", article.altTxt)
-    const description=document.getElementById("description")
-    description.innerHTML=(article.description)
-    const title=document.getElementById("title")
-    title.innerHTML=(article.name)
-    const price=document.getElementById("price")
-    price.innerHTML=(article.price)
-    //colors = tableau : boucle de for of ?
-    for(let colorspossibile of article.colors){
-        const color=document.createElement("option")
-        color.setAttribute("value",colorspossibile)
-        color.innerHTML=(colorspossibile)
-        document.getElementById("colors").appendChild(color)
-    }    
-})
+  .then((dataFromApi) => dataFromApi.json())
+  .then((jsonArticle) => {    
+    let article = new Article(jsonArticle);
+    article.generateProductDetails();    
+  })
 
-//Listen color and qqty selected and validate
-
-var button = document.getElementById("addToCart")
+// 3 Listen color and qqty selected and validate
+var button = document.getElementById("addToCart");
 button.addEventListener("click", function () {
-    //Coulour Selected
-    const colorList = document.getElementById("colors");
-    const colorSelected = colorList.querySelector("option:checked").value
-    //Qtty Selected
-    const qttySelected = document.getElementById("quantity").value
-    //Message Test
-    alert("Nombre : " + qttySelected + " et couleur : " + colorSelected)
+  const colorList = document.getElementById("colors");
+  const colorSelected = colorList.querySelector("option:checked").value;
+  //Qtty Selected          UPDATE Mentor : A cheecker : ci dessus : document.getElementbyId("colors").value
+  const qttySelected = document.getElementById("quantity").value;
 
-    
-    //passer les data par l'URL ?  /par Storage ?
+
+  // 3 cart à traiter dans le LocalStorage
+  let cartActif = {
+    id: idCanap,
+    color: colorSelected,
+    qtty: qttySelected,
+  };
+  
+    // 3 LocalSto Empty ? create first One
+  if (!localStorage.getItem("cartJson")) {
+    let cartJson = JSON.stringify([cartActif]);   //sofaArray
+    localStorage.setItem("cartJson", cartJson);
+    alert("On a créé un LocalSto avec" + cartJson);
+    console.table(cartJson)
+  }
+
+
+  // 3 ID connu ? si produit existe (et la couleur) j'augmente, sinon ajouter.
+  else {
+    let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
+    //parcourir la liste - trouver si ID et couleur existent    
+    const resultFind = listDeCartJson.find(
+      (el) => el.id === cartActif.id && el.color === cartActif.color)
+      
+      //Si le produit commandé est déjà dans le panier : incrémente qqty
+      if (resultFind) {        
+        resultFind.qtty=parseInt(resultFind.qtty) + parseInt(cartActif.qtty)
+        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson)); //acartActif
+        
+      }//Si le produit commandé n'est pas dans le panier
+      else {
+        listDeCartJson.push(cartActif);
+        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
+        console.table(listDeCartJson);
+        
+    }
+    console.table(listDeCartJson)
+  }  //
 })
+
