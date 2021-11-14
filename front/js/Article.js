@@ -61,7 +61,7 @@ class Article {
       document.getElementById("colors").appendChild(color);
     }
   }
-    generateCart() {      
+    generateCart(qtty,color) {      // a besoin de la qtty pour rendre le prix total de la ligne, et de la couleur pour l'ajouter   
       const article = document.createElement("article")
       document.querySelector("#cart__items").appendChild(article)
       article.setAttribute("class", "cart__item");
@@ -71,20 +71,21 @@ class Article {
                         </div>
                         <div class="cart__item__content">
                           <div class="cart__item__content__titlePrice">
-                            <h2>${this.name}</h2>
+                            <h2>${this.name}<p>${color}</h2>
                             <p>${this.price} €</p>
                           </div>
                           <div class="cart__item__content__settings">
                             <div class="cart__item__content__settings__quantity">
                               <p>Qté : </p>
-                              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${qtty}">
                             </div>
                             <div class="cart__item__content__settings__delete">
                               <p class="deleteItem">Supprimer</p>
                             </div>
                           </div>
                         </div>
-                          ` 
+                          `
+      return(qtty*parseInt(this.price))
     }
   }
 
