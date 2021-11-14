@@ -2,6 +2,7 @@
 Constructor : to make new objects
 generateCard : to fill the HTML code of Index.HTML
 generateProduct : to fill the HTML code of Product.HTML
+generateCart : to fill the HTML code in cart.html
 */
 
 class Article {
@@ -12,7 +13,7 @@ class Article {
     this.price = articleData["price"];
     this.imageUrl = articleData["imageUrl"];
     this.description = articleData["description"];
-    this.altTxt = articleData["altTxt"];
+    this.altTxt = articleData["altTxt"];    
   }
   generateCard() {
     const container = document.createElement("a");
@@ -60,4 +61,30 @@ class Article {
       document.getElementById("colors").appendChild(color);
     }
   }
-}
+    generateCart() {      
+      const article = document.createElement("article")
+      document.querySelector("#cart__items").appendChild(article)
+      article.setAttribute("class", "cart__item");
+      article.setAttribute("data-id", this.id);
+      article.innerHTML = `<div class="cart__item__img">
+                          <img src="${this.imageUrl}" alt="${this.altTxt}">
+                        </div>
+                        <div class="cart__item__content">
+                          <div class="cart__item__content__titlePrice">
+                            <h2>${this.name}</h2>
+                            <p>${this.price} €</p>
+                          </div>
+                          <div class="cart__item__content__settings">
+                            <div class="cart__item__content__settings__quantity">
+                              <p>Qté : </p>
+                              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                            </div>
+                            <div class="cart__item__content__settings__delete">
+                              <p class="deleteItem">Supprimer</p>
+                            </div>
+                          </div>
+                        </div>
+                          ` 
+    }
+  }
+

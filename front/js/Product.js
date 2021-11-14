@@ -1,18 +1,18 @@
-// 4 parts :
-// 1 Search for ID parameter in the URL
-// 2 Print the details
-// 3 listen colors and qqty to send to cart
-// 4 Cart management of the product page - connected to localStorage
+// 4 parties :
+// 1 trouver l'ID dans l'URL
+// 2 Afficher les détails du kanap
+// 3 écouter qqté et couleurs
+// 4 gérer le panier sous forme de liste dans le localStorage
 
 
-// 1 Search for ID parameter in the URL :
+// 1 trouver l'ID dans l'URL
 
 var currentUrl = window.location.href;
 var url = new URL(currentUrl);
 var idCanap = url.searchParams.get("id");
 
 
-// 2 To get one Sofa and print its details on the screen
+// 2 Afficher les détails du kanap
 
 fetch(`http://localhost:3000/api/products/${idCanap}`)
   .then((dataFromApi) => dataFromApi.json())
@@ -21,7 +21,7 @@ fetch(`http://localhost:3000/api/products/${idCanap}`)
     article.generateProductDetails();    
   })
 
-// 3 Listen color and qqty selected and validate
+// 3 écouter qqté et couleurs
 var button = document.getElementById("addToCart");
 button.addEventListener("click", function () {
   const colorList = document.getElementById("colors");
@@ -66,6 +66,6 @@ button.addEventListener("click", function () {
         
     }
     console.table(listDeCartJson)
-  }  //
+  }
 })
 
