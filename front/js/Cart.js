@@ -1,6 +1,6 @@
 // 1 faire afficher le LocalSto dans le Panier
-// 2 change qqty : écouter les changement / trouver l'ID impacté / mettre à jours
-// 3 Supprimer : écouter les changement / trouver l'ID impacté / mettre à jours
+// 2 Supprimer : écouter les changement / trouver l'ID impacté / mettre à jours
+// 3 change qqty : écouter les changement / trouver l'ID impacté / mettre à jours
 
 
 
@@ -30,16 +30,16 @@ if (localStorage.getItem("cartJson")) {
             }
         }        
     })
-    // 1 Calcul des qtty et prix
+    // 1 Affichage des totaux qtty et prix dans le HTML
     .then(function() {      
-      const totalPourLeHTML = document.querySelector("#totalQuantity")
-      totalPourLeHTML.innerHTML = totalqtty
+      const qttyTotalPourLeHTML = document.querySelector("#totalQuantity")
+      qttyTotalPourLeHTML.innerHTML = totalqtty
       const prixTotalHTML = document.querySelector("#totalPrice")
       prixTotalHTML.innerHTML = totalPrice
     })
-    .then(function(){      //on lance ici la suppression (attention il y en a de partout)
+    .then(function(){      // 2 on lance ici la suppression (attention il y en a de partout)
         let btn_supprimer = document.getElementsByClassName("deleteItem")  // document.getElementsByClassName document.querySelectorAll
-        console.log(" en écoute : " + btn_supprimer + " lengt : " + btn_supprimer.length)
+        console.log(" Delete en écoute : " + btn_supprimer + " lengt : " + btn_supprimer.length)
     
         for (let j = 0; j < btn_supprimer.length; j++){
             btn_supprimer[j].addEventListener("click" , (event) => {
@@ -47,6 +47,21 @@ if (localStorage.getItem("cartJson")) {
                 deleteProduct(parent.dataset.id,parent.dataset.color)
             })
         }
+        // 3 mofif de qtty : écouter, maj, recharger
+        var updateQtty = document.getElementsByClassName("itemQuantity")
+        console.log(" modif QTTy on écoute : " + updateQtty + " nombre écouté : " + updateQtty.length)
+        for (let k = 0; k < updateQtty.length; k++){
+            updateQtty[k].addEventListener("change" , (e) => {
+                //récupérer le nouvrau qtty / updater le LocalSto / recharger                
+                let newQtty = updateQtty[k].valueAsNumber
+                console.log(" BIM ! qtty changée ! Elle est passée à : " + newQtty)
+                let parent = e.target.closest("article")
+                updateProduct(parent.dataset.id,parent.dataset.color,newQtty)
+            })
+        }
+                //let parent = e.target.closest("article")  //event.target signifie btn_supprimer[j]
+                //deleteProduct(parent.dataset.id,parent.dataset.color)
+
     })   
   }
   else{
@@ -54,11 +69,10 @@ if (localStorage.getItem("cartJson")) {
     panierVide.innerHTML = "Le Panier est vide"
   }
   
-  // 2 écouter les changement / trouver l'ID impacté / mettre à jours         TOUT CA MARCHE PAS, voir le 3 Antoine
-  // le 1 risque de devenir une fonction que l'on relancera si changement détecté
+  
+  // le 1 risque de devenir une fonction que l'on relancera si changement détecté (maj : non, fonction d'effacement et qtt séparée puis reload)
 function updateProduct() {
-    var updateQtty = document.getElementsByClassName("itemQuantity")
-    console.log(" en écoute : " + updateQtty + " updateQtty.length : " + updateQtty[1])
+    
 
     for (let k = 0; k < 3 ; k++){  //updateQtty.length
     console.log(" en écoute  détaillée : " + updateQtty[k])
@@ -69,10 +83,9 @@ function updateProduct() {
         })
     }
 }
-// lancer la fonction
 
-// 3 Suppression écouter les changement / trouver l'ID impacté / mettre à jours    //fonctionne (refait avec Antoine tout vérifier, changé pleins de trucs)
 
+// 2 Fonction de Suppression   //fonctionne (refait avec Antoine tout vérifier, changé pleins de trucs)
 function deleteProduct(id, color) {
     console.log("fonction deleteProduct lancée...")
     let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
@@ -84,7 +97,17 @@ function deleteProduct(id, color) {
     location.reload()
 }
 
-
+// 3 Fonction d'update
+function updateProduct(id, color, newqtty) {
+    console.log("fonction Update lancée... newqtty devrait être : " + newqtty)
+    let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
+    const resultFind = listDeCartJson.find(
+        (el) => el.id === id && el.color === color
+    )
+    resultFind.qtty=newqtty
+    localStorage.setItem("cartJson",JSON.stringify(listDeCartJson))
+    location.reload()
+}
     
 
 

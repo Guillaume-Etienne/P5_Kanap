@@ -59,7 +59,7 @@ class Article {
       document.querySelector("#cart__items").appendChild(article)
       article.setAttribute("class", "cart__item")
       article.setAttribute("data-id", this.id)
-      article.setAttribute("data-color", color) // ajouté pour la suite (delete)
+      article.setAttribute("data-color", color) // 2 datas ajoutés pour la suite de gestion du panier (delete et ??)
       article.innerHTML = `<div class="cart__item__img">
                           <img src="${this.imageUrl}" alt="${this.altTxt}">
                         </div>
