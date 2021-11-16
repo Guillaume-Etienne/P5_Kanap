@@ -56,15 +56,14 @@ button.addEventListener("click", function () {
       //Si le produit commandé est déjà dans le panier : incrémente qqty
       if (resultFind) {        
         resultFind.qtty=parseInt(resultFind.qtty) + parseInt(cartActif.qtty)
-        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson)); //acartActif
+        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
         
-      }//Si le produit commandé n'est pas dans le panier
+      }//Si le produit commandé n'est pas dans le panier                Update Antoine, la ligne répétée pourrait être en une fois à la suite des boucle IF Else
       else {
         listDeCartJson.push(cartActif);
         localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
-        console.table(listDeCartJson);
-        
-    }
+        console.table(listDeCartJson);        
+      }
     console.table(listDeCartJson)
   }
 })

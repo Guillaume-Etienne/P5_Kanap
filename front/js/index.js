@@ -1,4 +1,3 @@
-console.log("Le JS est connecté");
 // Main function
 // To get all the sofas and print their details on the index.html
 

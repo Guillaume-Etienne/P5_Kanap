@@ -34,14 +34,7 @@ class Article {
     descript.innerHTML = this.description;
     return container;
   }
-  /*generateProductImage() {
-    document.getElementsByClassName("item__img");
-    const imgproduct = document.createElement("img");
-    document.appendChild(imgproduct);
-    imgproduct.setAttribute("src", this.imageUrl);
-    console.log(this.imageUrl);
-    return container;
-  }*/
+  
   generateProductDetails() {
     const img = document.createElement("img");
     document.getElementById("item__img").appendChild(img);
@@ -64,8 +57,9 @@ class Article {
     generateCart(qtty,color) {      // a besoin de la qtty pour rendre le prix total de la ligne, et de la couleur pour l'ajouter   
       const article = document.createElement("article")
       document.querySelector("#cart__items").appendChild(article)
-      article.setAttribute("class", "cart__item");
-      article.setAttribute("data-id", this.id);
+      article.setAttribute("class", "cart__item")
+      article.setAttribute("data-id", this.id)
+      article.setAttribute("data-color", color) // ajouté pour la suite (delete)
       article.innerHTML = `<div class="cart__item__img">
                           <img src="${this.imageUrl}" alt="${this.altTxt}">
                         </div>
