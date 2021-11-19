@@ -1,6 +1,6 @@
 // 1 faire afficher le LocalSto dans le Panier
-// 2 Supprimer : écouter les changement / trouver l'ID impacté / mettre à jours
-// 3 change qqty : écouter les changement / trouver l'ID impacté / mettre à jours
+// 2 Supprimer : écouter les changement / lance une fonction dédiée
+// 3 change qqty : écouter les changement / lance une fonction aussi
 
 
 
@@ -37,13 +37,13 @@ if (localStorage.getItem("cartJson")) {
       const prixTotalHTML = document.querySelector("#totalPrice")
       prixTotalHTML.innerHTML = totalPrice
     })
-    .then(function(){      // 2 on lance ici la suppression (attention il y en a de partout)
+    .then(function(){      // 2 on lance ici la suppression
         let btn_supprimer = document.getElementsByClassName("deleteItem")  // document.getElementsByClassName document.querySelectorAll
         console.log(" Delete en écoute : " + btn_supprimer + " lengt : " + btn_supprimer.length)
     
         for (let j = 0; j < btn_supprimer.length; j++){
             btn_supprimer[j].addEventListener("click" , (event) => {
-                let parent = event.target.closest("article")  //event.target signifie btn_supprimer[j]
+                let parent = event.target.closest("article")  //event.target signifie btn_supprimer[j] closest:le parent le plus proche ciblé (ici "article")
                 deleteProduct(parent.dataset.id,parent.dataset.color)
             })
         }
@@ -70,7 +70,7 @@ if (localStorage.getItem("cartJson")) {
   }
   
   
-  // le 1 risque de devenir une fonction que l'on relancera si changement détecté (maj : non, fonction d'effacement et qtt séparée puis reload)
+  // le 1 : une fonction que l'on relancera si changement détecté (maj : non, fonction d'effacement et qtt séparée puis reload)
 function updateProduct() {
     
 
