@@ -39,8 +39,6 @@ if (localStorage.getItem("cartJson")) {
     })
     .then(function(){      // 2 on lance ici la suppression
         let btn_supprimer = document.getElementsByClassName("deleteItem")  // document.getElementsByClassName document.querySelectorAll
-        console.log(" Delete en écoute : " + btn_supprimer + " lengt : " + btn_supprimer.length)
-    
         for (let j = 0; j < btn_supprimer.length; j++){
             btn_supprimer[j].addEventListener("click" , (event) => {
                 let parent = event.target.closest("article")  //event.target signifie btn_supprimer[j] closest:le parent le plus proche ciblé (ici "article")
@@ -49,12 +47,10 @@ if (localStorage.getItem("cartJson")) {
         }
         // 3 mofif de qtty : écouter, maj, recharger
         var updateQtty = document.getElementsByClassName("itemQuantity")
-        console.log(" modif QTTy on écoute : " + updateQtty + " nombre écouté : " + updateQtty.length)
         for (let k = 0; k < updateQtty.length; k++){
             updateQtty[k].addEventListener("change" , (e) => {
                 //récupérer le nouvrau qtty / updater le LocalSto / recharger                
                 let newQtty = updateQtty[k].valueAsNumber
-                console.log(" BIM ! qtty changée ! Elle est passée à : " + newQtty)
                 let parent = e.target.closest("article")
                 updateProduct(parent.dataset.id,parent.dataset.color,newQtty)
             })
@@ -75,11 +71,9 @@ function updateProduct() {
     
 
     for (let k = 0; k < 3 ; k++){  //updateQtty.length
-    console.log(" en écoute  détaillée : " + updateQtty[k])
-    updateQtty[1].addEventListener("change" , (event) => {
-        event.preventDefault()
-        const qttyUpdated = updateQtty.value
-        console.log("Quantité a été changée pour : " + qttyUpdated)
+        updateQtty[1].addEventListener("change" , (event) => {
+            event.preventDefault()
+            const qttyUpdated = updateQtty.value        
         })
     }
 }
@@ -87,7 +81,6 @@ function updateProduct() {
 
 // 2 Fonction de Suppression   //fonctionne (refait avec Antoine tout vérifier, changé pleins de trucs)
 function deleteProduct(id, color) {
-    console.log("fonction deleteProduct lancée...")
     let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
     const resultFind = listDeCartJson.findIndex(
         (el) => el.id === id && el.color === color
@@ -99,7 +92,6 @@ function deleteProduct(id, color) {
 
 // 3 Fonction d'update
 function updateProduct(id, color, newqtty) {
-    console.log("fonction Update lancée... newqtty devrait être : " + newqtty)
     let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
     const resultFind = listDeCartJson.find(
         (el) => el.id === id && el.color === color
