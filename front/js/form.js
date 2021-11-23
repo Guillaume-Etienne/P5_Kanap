@@ -1,7 +1,7 @@
 // 1 Vérifier le format des données - Afficher un message d'erreur si mauvais format
 // 2 Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
-// 3 Envoyer à l'API
-// Message avec l'API ?
+// 3 Envoyer le tout à l'API
+// 4 récupérer l'Order ID et transmettre à la page de validation
 
 
 
@@ -58,7 +58,7 @@ document
 document
   .getElementById("city")
   .addEventListener("input", function(e) {
-  if (/^[a-zA-Z0-9\s,.'-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{3,}$/.test(e.target.value)) {
+  if (/[A-Z]{1,}[a-zA-Z0-9\s,.'-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{3,}$/.test(e.target.value)) {
     getCityValidatio().innerText = ""   
   } else {
     getCityValidatio().innerText = "Erreur de saisie"    
@@ -105,18 +105,16 @@ function postForm() {
         },
         body: JSON.stringify(order)
     }
-    // Envoi
+    // 3 et 4 Envoi et récupération de l'orderId
     fetch("http://localhost:3000/api/products/order", options)
     .then((response) => response.json())
-    .then((data) => {
-      console.log("data : " + data.orderId)
+    .then((data) => {      
       let lienPageConfirmation="./confirmation.html?id=" + data.orderId
-      console.log("lien final : " + lienPageConfirmation)
       localStorage.clear()                //vidange du LocalSto
       document.location.href = lienPageConfirmation
     })
     .catch(function (error) {
-        console.log ("Problème catché : " + error.message)
+        console.log ("Problème avec l'API : " + error.message)
     })
 }
 

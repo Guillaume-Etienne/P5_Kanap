@@ -39,10 +39,9 @@ button.addEventListener("click", function () {
   
     // 3 LocalSto Empty ? create first One
   if (!localStorage.getItem("cartJson")) {
-    let cartJson = JSON.stringify([cartActif]);   //sofaArray
-    localStorage.setItem("cartJson", cartJson);
-    alert("On a créé un LocalSto avec" + cartJson);
-    console.table(cartJson)
+    let cartJson = JSON.stringify([cartActif])
+    localStorage.setItem("cartJson", cartJson)
+    alert("Qtté ajoutée au panier !")
   }
 
 
@@ -56,15 +55,14 @@ button.addEventListener("click", function () {
       //Si le produit commandé est déjà dans le panier : incrémente qqty
       if (resultFind) {        
         resultFind.qtty=parseInt(resultFind.qtty) + parseInt(cartActif.qtty)
-        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
-        
+        localStorage.setItem("cartJson", JSON.stringify(listDeCartJson))
+        alert("Qtté ajoutée au panier !")
       }//Si le produit commandé n'est pas dans le panier                Update Antoine, la ligne répétée pourrait être en une fois à la suite des boucle IF Else
       else {
         listDeCartJson.push(cartActif);
         localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
-        console.table(listDeCartJson);        
-      }
-    console.table(listDeCartJson)
-  }
+        alert("Qtté ajoutée au panier !")       
+      }    
+    }
 })
 
