@@ -77,7 +77,12 @@ function postForm() {
     
     // liste à commander
     let listDeCartJsonDuStorage = JSON.parse(localStorage.getItem("cartJson"))
-    
+    let tableauFinal=[]
+
+    for (let cartJsonDuStorage of listDeCartJsonDuStorage){
+      tableauFinal.push(cartJsonDuStorage.id)
+    }
+    console.table(tableauFinal)
     // destinataire
     
     const order = {
@@ -88,7 +93,7 @@ function postForm() {
             city: inputCity.value,
             email: inputMail.value,
         },
-        products: listDeCartJsonDuStorage,
+        products: tableauFinal,
     }
     
     // options d'envoi
@@ -100,40 +105,27 @@ function postForm() {
         },
         body: JSON.stringify(order)
     }
-    // Envoie
+    // Envoi
     fetch("http://localhost:3000/api/products/order", options)
-    .then(function(resolve,reject){
-      if (resolve.ok) {
-        console.log("le resolve est ok :  " +resolve)
-        return resolve.json()        
-      }
-      else{
-        console.log("le RESOLVE est PAS BON : reject :" + reject)
-        return reject.json()
-      }
-    })    
-    .then(function (value) {
-        console.log ("On est dans second .then donc le value est : " + value)
-        console.table(value)
-      }
-    )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("data : " + data.orderId)
+      let lienPageConfirmation="./confirmation.html?id=" + data.orderId
+      console.log("lien final : " + lienPageConfirmation)
+      localStorage.clear()                //vidange du LocalSto
+      document.location.href = lienPageConfirmation
+    })
     .catch(function (error) {
         console.log ("Problème catché : " + error.message)
-    });
-    
-
-    // fin envoi
-
+    })
 }
 
-// 2 - au clique d'envoyer : NE PASannuler le compo (à voir si check supplémentaire ?), récupérer le bordel, créer l'objet, créer le tableau
+// 2 - au clique d'envoyer 
 const send = document.getElementById("order")
 send.addEventListener("click", function (e) { 
-    e.preventDefault()
-    console.log("commander !")
+    e.preventDefault()    
     postForm()
     }
 )
 
-// reste à : récupérer confirmation  / renvoyer sur la page de confirmation / Faire apparaître le num de commande (sans l'enregistrer)
 

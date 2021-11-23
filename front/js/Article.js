@@ -15,6 +15,7 @@ class Article {
     this.description = articleData["description"];
     this.altTxt = articleData["altTxt"];    
   }
+  //to fill the HTML code of Index.HTML
   generateCard() {
     const container = document.createElement("a");
     container.setAttribute("href", "./product.html?id=" + this.id);
@@ -34,7 +35,7 @@ class Article {
     descript.innerHTML = this.description;
     return container;
   }
-  
+  //to fill the HTML code of Product.HTML
   generateProductDetails() {
     const img = document.createElement("img");
     document.getElementById("item__img").appendChild(img);
@@ -46,20 +47,20 @@ class Article {
     title.innerHTML = this.name;
     const price = document.getElementById("price");
     price.innerHTML = this.price;
-    //colors = tableau : boucle de for of ?
-    for (let colorspossibile of this.colors) {
+    for (let colorspossible of this.colors) {
       const color = document.createElement("option");
-      color.setAttribute("value", colorspossibile);
-      color.innerHTML = colorspossibile;
+      color.setAttribute("value", colorspossible);
+      color.innerHTML = colorspossible;
       document.getElementById("colors").appendChild(color);
     }
+    //generateCart : to fill the HTML code in cart.html
   }
     generateCart(qtty,color) {      // a besoin de la qtty pour rendre le prix total de la ligne, et de la couleur pour l'ajouter   
       const article = document.createElement("article")
       document.querySelector("#cart__items").appendChild(article)
       article.setAttribute("class", "cart__item")
       article.setAttribute("data-id", this.id)
-      article.setAttribute("data-color", color) // 2 datas ajoutés pour la suite de gestion du panier (delete et ??)
+      article.setAttribute("data-color", color) // 2 datas ajoutés pour la suite de gestion du panier ( pour identifer quoi deleter)
       article.innerHTML = `<div class="cart__item__img">
                           <img src="${this.imageUrl}" alt="${this.altTxt}">
                         </div>
