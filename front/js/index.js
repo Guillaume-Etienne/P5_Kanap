@@ -1,5 +1,4 @@
-// Main function
-// To get all the sofas and print their details on the index.html
+// récupère tous les objets Article et les intègre au index.html
 
     fetch("http://localhost:3000/api/products")
     .then (dataFromApi => dataFromApi.json())

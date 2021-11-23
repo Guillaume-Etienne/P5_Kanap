@@ -1,8 +1,8 @@
-// 1 Vérifier le format des données - Afficher un message d'erreur si mauvais format
-// 2 Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
-// 3 Envoyer le tout à l'API
-// 4 récupérer l'Order ID et transmettre à la page de validation
-
+ /* 1 Vérifier le format des données - Afficher un message d'erreur si mauvais format
+    2 Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
+    3 Envoyer le tout à l'API
+    4 récupérer l'Order ID et transmettre à la page de validation
+*/
 
 
 // 1 Vérifier le format des données : 4 RegEx, 1 HTML (mail)
@@ -108,9 +108,9 @@ function postForm() {
     // 3 et 4 Envoi et récupération de l'orderId
     fetch("http://localhost:3000/api/products/order", options)
     .then((response) => response.json())
-    .then((data) => {      
+    .then((data) => {
       let lienPageConfirmation="./confirmation.html?id=" + data.orderId
-      localStorage.clear()                //vidange du LocalSto
+      localStorage.clear()
       document.location.href = lienPageConfirmation
     })
     .catch(function (error) {
@@ -118,7 +118,7 @@ function postForm() {
     })
 }
 
-// 2 - au clique d'envoyer 
+// 2 - au clic : envoyer à l'API
 const send = document.getElementById("order")
 send.addEventListener("click", function (e) { 
     e.preventDefault()    

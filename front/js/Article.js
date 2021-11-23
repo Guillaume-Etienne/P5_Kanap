@@ -1,8 +1,8 @@
-/* Everything about articles + fonctions to create and manipulate :
-Constructor : to make new objects
-generateCard : to fill the HTML code of Index.HTML
-generateProduct : to fill the HTML code of Product.HTML
-generateCart : to fill the HTML code in cart.html
+/* Tout ce qui concerne les articles + fonctions pour les créer et manipuler
+Construcor : pour créer un objet
+generateCard : pour remplir le ndex.HTML
+generateProduct : pour remplir le Product.HTML
+generateCart : pour remplrir cart.html   + infos supplémentaires pour les traitements
 */
 
 class Article {
@@ -15,7 +15,7 @@ class Article {
     this.description = articleData["description"];
     this.altTxt = articleData["altTxt"];    
   }
-  //to fill the HTML code of Index.HTML
+  //Remplir le Index.HTML
   generateCard() {
     const container = document.createElement("a");
     container.setAttribute("href", "./product.html?id=" + this.id);
@@ -35,7 +35,7 @@ class Article {
     descript.innerHTML = this.description;
     return container;
   }
-  //to fill the HTML code of Product.HTML
+  //Remplir le Product.HTML
   generateProductDetails() {
     const img = document.createElement("img");
     document.getElementById("item__img").appendChild(img);
@@ -53,7 +53,7 @@ class Article {
       color.innerHTML = colorspossible;
       document.getElementById("colors").appendChild(color);
     }
-    //generateCart : to fill the HTML code in cart.html
+    //generateCart : remplir le  cart.html
   }
     generateCart(qtty,color) {      // a besoin de la qtty pour rendre le prix total de la ligne, et de la couleur pour l'ajouter   
       const article = document.createElement("article")

@@ -1,9 +1,7 @@
-// 1 faire afficher le LocalSto dans le Panier
-// 2 Supprimer : écouter les changement / lance une fonction dédiée
-// 3 change qqty : écouter les changement / lance une fonction aussi
-
-
-
+/* 1 faire afficher le LocalSto dans le Panier
+   2 Supprimer : écouter les changement / lance une fonction dédiée
+ 3 change qqty : écouter les changement / lance une fonction aussi
+ */
 
 // 1 faire afficher le LocalSto dans le Panier
 var totalPrice= 0
@@ -37,8 +35,8 @@ if (localStorage.getItem("cartJson")) {
       const prixTotalHTML = document.querySelector("#totalPrice")
       prixTotalHTML.innerHTML = totalPrice
     })
-    .then(function(){      // 2 on lance ici la suppression
-        let btn_supprimer = document.getElementsByClassName("deleteItem")  // document.getElementsByClassName document.querySelectorAll
+    .then(function(){      // 2 on suppression d'un article
+        let btn_supprimer = document.getElementsByClassName("deleteItem")
         for (let j = 0; j < btn_supprimer.length; j++){
             btn_supprimer[j].addEventListener("click" , (event) => {
                 let parent = event.target.closest("article")  //event.target signifie btn_supprimer[j] closest:le parent le plus proche ciblé (ici "article")
