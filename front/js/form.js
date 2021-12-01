@@ -5,36 +5,13 @@
 */
 
 
+//variables de check de chaque éléments du formulaire
+var check1=false
+var check2=false
+var check3=false
+var check4=false
+var check5=false
 
-
-//1 : fonction pour désactiver l'envoi    + validation mail HTML obligatoire
-
-function disableCommander(disabled) {
-  if (disabled) {
-    document
-      .getElementById("order")
-      .setAttribute("disabled", true)
-    console.log("Envoi désactivé MEC")
-  } else {
-    document
-      .getElementById("order")
-      .removeAttribute("disabled")
-    console.log("Envoi ACTIVEEEEEEE")
-  }
-}
-
-//disableCommander(true) // de base : pas le droit mec !
-var toutEstRempli=false
-var nombreDeRempli=0
-console.log("nombre de remplis : " + nombreDeRempli)
-
-
-/*
-//1 : si panier vide : désactiver l'envoi
-const panierVide = document.querySelector("#cart__items")
-console.log("la var paniervide puis paniervide.value est :" + panierVide + panierVide.value)     //  Bordel !  il ne récupère pas le bordel
-//if (panierVide.value = "Le Panier est vide"){disableCommander(true)}
-*/
 
 // 1 Vérifier le format des données : 4 via RegEx, 1 directement dans le HTML (mail)
 function getFirstNameValidation() {
@@ -49,21 +26,23 @@ function getAddressValidation() {
     return document.getElementById("addressErrorMsg")        
 }
 
-function getCityValidatio() {
+function getCityValidation() {
     return document.getElementById("cityErrorMsg")    
+}
+function getMailValidation() {
+  return document.getElementById("emailErrorMsg")    
 }
 
 // Filtrer le formulaire
-
-
 document
   .getElementById("firstName")
   .addEventListener("input", function(e) {
   if (/[A-Z]{1,}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]/.test(e.target.value) ) {
     getFirstNameValidation().innerText = ""
-    nombreDeRempli+=1
+    check1=true
 } else {
-    getFirstNameValidation().innerText = "Erreur de saisie"    
+    getFirstNameValidation().innerText = "Erreur de saisie"
+    check1=false  
   }
 })
 
@@ -72,9 +51,10 @@ document
   .addEventListener("input", function(e) {
   if (/[A-Z]{1,}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]/.test(e.target.value)) {
     getLastNameValidation().innerText = ""
-    nombreDeRempli+=1  
+    check2=true  
   } else {
-    getLastNameValidation().innerText = "Erreur de saisie"    
+    getLastNameValidation().innerText = "Erreur de saisie"  
+    check2=false  
   }
 })
 
@@ -83,9 +63,10 @@ document
   .addEventListener("input", function(e) {
   if (/^[a-zA-Z0-9\s,.'-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{3,}$/.test(e.target.value)) {
     getAddressValidation().innerText = ""
-    nombreDeRempli+=1  
+    check3=true
   } else {
-    getAddressValidation().innerText = "Erreur de saisie"    
+    getAddressValidation().innerText = "Erreur de saisie"
+    check3=false  
   }
 })
 
@@ -93,19 +74,26 @@ document
   .getElementById("city")
   .addEventListener("input", function(e) {
   if (/[A-Z]{1,}[a-zA-Z0-9\s,.'-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{3,}$/.test(e.target.value)) {
-    getCityValidatio().innerText = ""
-    nombreDeRempli+=1
+    getCityValidation().innerText = ""
+    check4=true
   } else {
-    getCityValidatio().innerText = "Erreur de saisie"    
+    getCityValidation().innerText = "Erreur de saisie"
+    check4=false  
   }
 })
 
+//le format 'email' est vérifié dans le HTML 
 document
   .getElementById("email")
   .addEventListener("input", function(e) {
   if (/[a-zA-Z0-9\s,.'-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ@]{3,}$/.test(e.target.value)) {
-    nombreDeRempli+=1
-  } 
+    getMailValidation().innerText = ""
+    check5=true
+  }
+  else{
+    getMailValidation().innerText = "Erreur de saisie"
+    check5=false
+  }
 })
 
 // 2 Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
@@ -126,8 +114,8 @@ function postForm() {
       tableauFinal.push(cartJsonDuStorage.id)
     }
     console.table(tableauFinal)
-    // destinataire
     
+    // destinataire    
     const order = {
         contact : {
             firstName : inputName.value,
@@ -163,20 +151,17 @@ function postForm() {
 
 // 2 - au clic : envoyer à l'API
 const send = document.getElementById("order")
-send.addEventListener("click", function (e) {
-  console.log("CLiqué !  Et là : nombre de remplis : " + nombreDeRempli)
+send.addEventListener("click", function (e) {  
   e.preventDefault()    
   if(!localStorage.getItem("cartJson")){
     alert("le panier est vide")
   }
   else{
-    if (nombreDeRempli>=5){
-      console.log("y'a 5 ou plus remplis !")
-      postForm()
+    if (check1 & check2 & check3 & check4 & check5){      
+      postForm()      
     }
-    else{
-      console.log("moins de 5 remplis")
-      alert("il faut remplir le formulaire")
+    else{      
+      alert("Le Formulaire doit être correctement complété")
     }
   }  
 })
