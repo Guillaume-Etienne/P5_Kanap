@@ -21,6 +21,13 @@ fetch(`http://localhost:3000/api/products/${idCanap}`)
     article.generateProductDetails();    
   })
 
+// 3 fonction de validation
+function afficheConfirmation() {
+  if(window.confirm(`Votre commande est ajoutée au panier !
+    Pour consulter votre panier, cliquez sur OK`)){
+      window.location.href ="cart.html";
+    }
+}
 // 3 écouter qqté et couleurs
 var button = document.getElementById("addToCart")
 button.addEventListener("click", function () {
@@ -43,7 +50,7 @@ button.addEventListener("click", function () {
     if (!localStorage.getItem("cartJson")) {
       let cartJson = JSON.stringify([cartActif])
       localStorage.setItem("cartJson", cartJson)
-      alert("Produit ajouté au panier !")
+      afficheConfirmation()
     }
   
   
@@ -58,12 +65,12 @@ button.addEventListener("click", function () {
         if (resultFind) {        
           resultFind.qtty=parseInt(resultFind.qtty) + parseInt(cartActif.qtty)
           localStorage.setItem("cartJson", JSON.stringify(listDeCartJson))
-          alert("Qtté ajoutée au panier !")
+          afficheConfirmation()
         }//Si le produit commandé n'est pas dans le panier                Update Antoine, la ligne répétée pourrait être en une fois à la suite des boucle IF Else
         else {
           listDeCartJson.push(cartActif);
           localStorage.setItem("cartJson", JSON.stringify(listDeCartJson));
-          alert("Qtté ajoutée au panier !")       
+          afficheConfirmation()      
         }    
       }
     }  
