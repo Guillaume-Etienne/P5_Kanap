@@ -1,6 +1,6 @@
 /* 1 faire afficher le LocalSto dans le Panier
    2 Supprimer : écouter les changement / lance une fonction dédiée
- 3 change qqty : écouter les changement / lance une fonction aussi
+   3 change qqty : écouter les changement / lance une fonction aussi
  */
 
 // 1 faire afficher le LocalSto dans le Panier
@@ -84,7 +84,7 @@ function deleteProduct(id, color) {
         (el) => el.id === id && el.color === color
     )
     listDeCartJson.splice(resultFind,1)
-    localStorage.setItem("cartJson",JSON.stringify(listDeCartJson))  //rappeler les fonctions de calculs qtty et  soit /rappeler l'affichage /soit window.reload
+    localStorage.setItem("cartJson",JSON.stringify(listDeCartJson))
     location.reload()
 }
 

@@ -1,6 +1,6 @@
 /* Tout ce qui concerne les articles + fonctions pour les créer et manipuler
-Construcor : pour créer un objet
-generateCard : pour remplir le ndex.HTML
+Constructor : pour créer un objet
+generateCard : pour remplir le index.HTML
 generateProduct : pour remplir le Product.HTML
 generateCart : pour remplrir cart.html   + infos supplémentaires pour les traitements
 */

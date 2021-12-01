@@ -5,7 +5,9 @@
 */
 
 
-// 1 Vérifier le format des données : 4 RegEx, 1 HTML (mail)
+// 1 Vérifier le format des données : 4 via RegEx, 1 directement dans le HTML (mail)
+
+//MAJ : fonction pour désactiver l'envoi    + validation mail HTML obligatoire
 function getFirstNameValidation() {
     return document.getElementById("firstNameErrorMsg")
 }
@@ -23,7 +25,7 @@ function getCityValidatio() {
 }
 
 // Filtrer le formulaire
-const textFR = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]{5,60}$/
+
 
 document
   .getElementById("firstName")

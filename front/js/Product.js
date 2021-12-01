@@ -43,11 +43,11 @@ button.addEventListener("click", function () {
     if (!localStorage.getItem("cartJson")) {
       let cartJson = JSON.stringify([cartActif])
       localStorage.setItem("cartJson", cartJson)
-      alert("Qtté ajoutée au panier !")
+      alert("Produit ajouté au panier !")
     }
   
   
-    // 3 ID connu ? si produit existe (et la couleur) j'augmente, sinon ajouter.
+    // 3 ID connu ? si produit existe (et la couleur) augmenter la qtté, sinon ajouter le produit.
     else {
       let listDeCartJson = JSON.parse(localStorage.getItem("cartJson"))
       //parcourir la liste - trouver si ID et couleur existent    
@@ -66,10 +66,6 @@ button.addEventListener("click", function () {
           alert("Qtté ajoutée au panier !")       
         }    
       }
-
-  }
-
-  // 3 cart à traiter dans le LocalStorage
-  
+    }  
 })
 
