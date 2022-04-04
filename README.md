@@ -1,3 +1,8 @@
+# JS vanillia creation #
+
+JS integration to make fonctionnal frontend and backend from an originaly created e-commerce website
+
+
 # Kanap #
 
 This is the front end and back end server for Project 5 of the Web Developer path.
